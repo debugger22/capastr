@@ -1,0 +1,77 @@
+{% load static %}
+
+<!doctype html>
+<html>
+	<head>
+		<title>Capastr | Feed</title>
+		<meta property="og:url" content="http://capastr.shardasoftwares.in" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="capastr" />
+		<meta property="og:image" content="http://www.shardasoftwares.in/images/og.png" />
+		<meta property="og:description" content="Capture The Trends" />	
+		<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.0.3/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/animate.min.css' %}" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/bootstrap-tagsinput.css' %}" />		
+		<link type="text/css" rel="stylesheet" href="{% static 'home/home.css' %}" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400' rel='stylesheet' type='text/css' />
+		<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Balthazar' rel='stylesheet' type='text/css'>
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			$( document ).ready(function (){
+
+			});
+		</script>
+		<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
+		<style>
+			td{
+				text-align: left;
+			}
+			.bootstrap-tagsinput{
+				width:400px;
+				height:100px;
+			}
+			ul{
+				list-style-type: none;
+			}
+			li{
+				width:70%;
+				background-color: rgb(240,240,240);
+				height:30px;
+				padding-top: 6px;
+				padding-left: 5%;
+				margin-bottom: 2px;
+			}
+		</style>
+			
+		
+
+	</head>
+	<body style="background:white;font-size:12px;">
+		<header id="header" style="z-index:1;">
+			<br/>
+			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
+		</header>		
+		<br/>
+		<div style="margin-right:10%;width:15%;" class="pull-right">
+			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/accounts/logout/">Logout</a>
+			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/accounts/profile/">Profile</a>
+		</div>
+		
+		<h4 style="color:rgb(9,46,32);margin-left:10%;">Feed</h4>
+		<div style="width:100%;padding-left:10%;margin-top:50px;">
+			
+			<ul>
+				{% for post in posts reversed %}
+				<li>{{ post}}</li>
+				{% endfor %}
+			</ul>
+
+		</div>
+		
+	</body>
+</html>

@@ -13,6 +13,17 @@ import thread
 def home(request):
 	return render(request,'home.html')
 
+
+@login_required
+def feed(request):
+	user = User.objects.get(mainuser=request.user)
+	posts = Post.objects.filter(network=user.network)
+	finalposts = []
+	for i in posts:
+		if user in i.viewers.all():
+			finalposts.append(i.data)
+	return HttpResponse("<br/>".join(finalposts))
+
 def register(request):
 	newUser = UserForm(request.GET)
 	if newUser.is_valid():
@@ -53,9 +64,9 @@ def collect_push(email, tags, data, post):
 		post.viewers.add(User.objects.get(email=i))
 	send_push(final,data, email)
 
-
+@login_required
 def post(request, email, data):
-	newPost = Post(data=data, owner=User.objects.get(email=email), push_sent=False)
+	newPost = Post(data=data, owner=User.objects.get(email=email), push_sent=False, network=User.objects.get(mainuser=request.user).network)
 	newPost.save()
 	tags = data.split(" ")
 	thread.start_new_thread(collect_push, (email, tags, data, newPost))
@@ -65,11 +76,11 @@ def post(request, email, data):
 @login_required
 def signup_user(request):
 	if request.method == 'POST':
-		form = UserForm(request.POST)
-		form.mainuser = request.user
+		form = UserForm(request.POST.copy())
+		form.data["mainuser"] = request.user.id
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/signup/user/success/')
+			return HttpResponseRedirect('/feed/')
 		else:
 			return HttpResponse(form.errors)
 			return render(request, 'sign_up.html', {'form': form, 'type':'User'})

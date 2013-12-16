@@ -8,6 +8,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'capastr.views.home', name='home'),
+    url(r'^feed/$', 'capastr.views.feed', name='feed'),
+
     url(r'^register/$', 'capastr.views.register', name='register'),
     url(r'^post/email/(.*)/data/(.*)/$', 'capastr.views.post', name='post'),
     url(r'^signup/user/$', 'capastr.views.signup_user', name='signup_user'),

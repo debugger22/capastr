@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	var on_list = null;
-	$('#updatable_list li').not(".close-btn input").click(function (event){
+	$('#updatable_list li').not('.close-btn').click(function (event){
 		//var list_items = ['name','email','mobile','tags']
 		if(event.target.id!="tags")
 			$(this).css({'height':'80px','background':'rgb(210,210,250)'});
@@ -17,14 +17,16 @@ $(document).ready(function () {
 		//	$('#'+list_items[i]).css({'height':'30px','background':'rgb(240,240,240)'});
 		//	$("#"+list_items[i]+"_form").css({'display':'none'});
 		//}
-	});//.children().click(function(e){
-  	//	return;
-	//});
+	}).children().not('input').click(function(e){
+			$('#'+$(this).data('for')).css({'height':'30px','background':'rgb(240,240,240)'});
+			$("#"+$(this).data('for')+"_form").css({'display':'none'});
+			$("#"+$(this).data('for')+"_close").css({'display':'none'});		
+	});
 
 	$('.close-btn').click(function (event){
 			$('#'+$(this).data('for')).css({'height':'30px','background':'rgb(240,240,240)'});
-			$("#"+$(this).data('for')+"_form").css({'display':'none'});
-			$("#"+$(this).data('for')+"_close").css({'display':'none'});
+			//$("#"+$(this).data('for')+"_form").css({'display':'none'});
+			//$("#"+$(this).data('for')+"_close").css({'display':'none'});
 	})
 
 });

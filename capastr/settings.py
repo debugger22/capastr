@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'datalink',
     'network',
     'post',
+    'update_data',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -28,9 +28,26 @@
 		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
 		<style>
-
+		ul{
+			list-style-type: none;
+		}
+		li{
+			width:70%;
+			margin-bottom: 1px;
+			background-color: rgb(240,240,240);
+			height:30px;
+			padding-top: 6px;
+			padding-left: 5%;
+		}
+		#updatable_list li{
+			cursor: pointer;
+		}
+		.bootstrap-tagsinput{
+			width:60%;
+			height: 100px;
+		}
 		</style>
-			
+		<script type="text/javascript" src="{% static 'profile/profile.js' %}"></script>
 		
 
 	</head>
@@ -40,21 +57,61 @@
 			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
-		<div style="margin-right:10%;width:15%;" class="pull-right">
-			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/accounts/logout/">Logout</a>
-			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/feed/">Feed</a>
+		<div style="margin-right:10%;width:15%;" class="pull-right btn-group">
+			<a class="btn btn-success" href="/feed/">Feed</a>
+			<a class="btn btn-danger" href="/accounts/logout/">Logout</a>
 		</div>
-		
+		<h4 style="color:rgb(9,46,32);margin-left:10%;">Personal Data</h4>		
 		<div style="width:100%;padding-left:10%;margin-top:50px;">
-			<h4 style="color:rgb(9,46,32);">Personal Data</h4>
-				<p><strong>Name:</strong> {{ name }}</p>
-				<p><strong>Email:</strong> {{ email }}</p>
-				<p><strong>Tags:</strong> {{ tags }}</p>
-				<p><strong>Network:</strong> {{ network }}</p>
-				<p><strong>Total Posts:</strong> {{ total_posts }}</p>				
-				<p><strong>Max Notifications:</strong> {{ max_notification }}</p>
-				<p><strong>Today's Notifications Count:</strong> {{ todays_notification_count }}</p>
+				<ul id="updatable_list">
+					<li id="name"><strong>Name:</strong> {{ name }}<div id="name_close" data-for="name" class="pull-right close-btn" style="margin-right:5px;font-size:18px;display: none;">&times;</div>
+						<span id="name_form" style="display:none;">
+							<form action="/update/name/" method="post">
+							{% csrf_token %}
+							<label>New Name: </label><input type="text" name="new_name" />
+							<input type="submit" value="Update" class="btn btn-info" />
+							</form>
+						</span>
+					</li>
+					<li id="email"><strong>Email:</strong> {{ email }}
+						<div id="email_close" data-for="email" class="pull-right close-btn" style="margin-right:5px;font-size:18px;display: none;">&times;</div>
 
+						<span id="email_form" style="display:none;">
+							<form action="/update/email/" method="post">
+							{% csrf_token %}
+							<label>New Email: </label><input type="text" name="new_email" />
+							<input type="submit" value="Update" class="btn btn-info" />
+							</form>
+						</span>
+					</li>
+					<li id="mobile"><strong>Mobile:</strong> {{ mobile }}
+						<div id="mobile_close" data-for="mobile" class="pull-right close-btn" style="margin-right:5px;font-size:15px;display: none;">&times;</div>
+						<span id="mobile_form" style="display:none;">
+							<form action="/update/mobile/" method="post">
+							{% csrf_token %}
+							<label>New Mobile: </label><input type="text" name="new_mobile" />
+							<input type="submit" value="Update" class="btn btn-info" />
+							</form>
+						</span>
+					</li>
+					<li id="tags"><strong>Tags:</strong> {{ tags }}
+						<div id="tags_close" data-for="tags" class="pull-right close-btn" style="margin-right:5px;font-size:15px;display: none;">&times;</div>
+						<span id="tags_form" style="display:none;">
+							<form action="/update/tags/" method="post">
+							{% csrf_token %}
+							<label>New Tags: </label><input data-role="tagsinput" value="{{ raw_tags }}" type="text" name="new_tags" />
+							<input type="submit" value="Update" class="btn btn-info" />
+							</form>
+						</span>
+					</li>
+
+				</ul>
+				<ul id="non_updatable_list">
+					<li id="network"><strong>Network:</strong> {{ network }}</li>
+					<li id="total_posts"><strong>Total Posts:</strong> {{ total_posts }}</li>				
+					<li id="max_notifications"><strong>Max Notifications:</strong> {{ max_notification }}</li>
+					<li id="todays_notification_count"><strong>Today's Notifications Count:</strong> {{ todays_notification_count }}</li>
+				</ul>
 
 		</div>
 		

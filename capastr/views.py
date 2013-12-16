@@ -56,6 +56,8 @@ def profile(request):
 	data['last_name'] = user.last_name
 	data['name'] = user.first_name + " " + user.last_name
 	data['email'] = user.email
+	data['mobile'] = user.mobile
+	data['raw_tags'] = ", ".join(user.tags.names())
 	data['tags'] = ", ".join([i.title() for i in user.tags.names()])
 	data['network'] = user.network.name
 	data['max_notification'] = user.max_notification
@@ -104,8 +106,12 @@ def signup_user(request):
 			return HttpResponse(form.errors)
 			return render(request, 'sign_up.html', {'form': form, 'type':'User'})
 	else:
-		form = UserForm()
-		return render(request, 'sign_up.html', {'form': form, 'type':'User'})
+		try:
+			user = User.objects.get(mainuser = request.user)
+			return HttpResponseRedirect("/feed/")
+		except User.DoesNotExist:
+			form = UserForm()
+			return render(request, 'sign_up.html', {'form': form, 'type':'User'})
 
 @login_required
 def signup_rep(request):

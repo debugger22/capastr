@@ -34,18 +34,26 @@
 			.bootstrap-tagsinput{
 				width:400px;
 			}
+			.helptext{
+				font-size:10px;
+				color:gray;
+			}
+			label{
+				font-size:13px;
+				font-weight: normal;
+			}
 		</style>
 			
 		
 
 	</head>
-	<body style="background:white;">
+	<body style="background:white;font-size:13px;">
 		<header id="header" style="z-index:1;">
 			<br/>
 			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
-		<h4 style="margin-left: 10%;">Userregistration form</h4>
+		<h4 style="margin-left: 10%;">User Registration Form</h4>
 			{% if form.errors %}
 		        <p style="color: red;">
 		            Please correct the error{{ form.errors|pluralize }} below.
@@ -56,7 +64,7 @@
 					  <form action="" method="post">
 					  	{% csrf_token %}
 					      {{ form.as_table }}
-		        	<tr><td></td><td><input type="submit" class="btn btn-success" value="Sign Up" id="cmdSignUp"></td></tr>
+		        	<tr><td></td><td><input type="submit" class="btn btn-info" value="Sign Up" id="cmdSignUp"/></td></tr>
 					  </form>
 		        </table>
 		        

@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 
 urlpatterns += staticfiles_urlpatterns()
 
-if 'datalink' in settings.INSTALLED_APPS:
+if 'update_data' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
-        #url(r'^data/', include('datalink.urls')),
+        url(r'^update/', include('update_data.urls')),
     )

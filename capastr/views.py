@@ -32,7 +32,7 @@ def collect_push(email, tags, data, post):
 	for i in ids:	#Iterating over users and tags to match the tags of post with the tags of users
 		temp = User.objects.get(id=i)
 		for j in tags:
-			if j in temp.tags.names():
+			if j.lower() in temp.tags.names():
 				final.append(temp.email)
 	final = list(set(final))	#Final list of eligible users
 	del ids
@@ -60,6 +60,13 @@ def profile(request):
 	data['network'] = user.network.name
 	data['max_notification'] = user.max_notification
 	data['todays_notification_count'] = user.todays_notification_count
+	posts = Post.objects.filter(network=user.network)
+	finalposts = []
+	count = 0
+	for i in posts:
+		if user == i.owner:
+			count+=1
+	data['total_posts'] = count
 	return render(request, 'profile.html', data)
 
 
@@ -70,8 +77,8 @@ def feed(request):
 	finalposts = []
 	for i in posts:
 		if user in i.viewers.all():
-			finalposts.append(i.data)
-	return HttpResponse("<br/>".join(finalposts))
+			finalposts.append(i.data + "  -  "+ i.owner.first_name + " " + i.owner.last_name)
+	return render(request,'feed.html',{'posts':finalposts})
 
 
 

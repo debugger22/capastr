@@ -28,31 +28,30 @@
 		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
 		<style>
-			td{
-				text-align: left;
-			}
-			.bootstrap-tagsinput{
-				width:400px;
-				height:100px;
-			}
+
 		</style>
 			
 		
 
 	</head>
-	<body style="background:white;">
+	<body style="background:white;font-size:12px;">
 		<header id="header" style="z-index:1;">
 			<br/>
 			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
+		<div style="margin-right:10%;width:15%;" class="pull-right">
+			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/accounts/logout/">Logout</a>
+			<a style="margin-right:1%;" class="btn btn-danger pull-right" href="/feed/">Feed</a>
+		</div>
 		
-		<div style="width:90%;margin-left:5%;margin-top:50px;">
-			<h4>Personal Data</h4>
+		<div style="width:100%;padding-left:10%;margin-top:50px;">
+			<h4 style="color:rgb(9,46,32);">Personal Data</h4>
 				<p><strong>Name:</strong> {{ name }}</p>
 				<p><strong>Email:</strong> {{ email }}</p>
-				<p><strong>Network:</strong> {{ network }}</p>
 				<p><strong>Tags:</strong> {{ tags }}</p>
+				<p><strong>Network:</strong> {{ network }}</p>
+				<p><strong>Total Posts:</strong> {{ total_posts }}</p>				
 				<p><strong>Max Notifications:</strong> {{ max_notification }}</p>
 				<p><strong>Today's Notifications Count:</strong> {{ todays_notification_count }}</p>
 

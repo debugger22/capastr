@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Capastr | Sign Up</title>
+		<title>Capastr | Profile</title>
 		<meta property="og:url" content="http://capastr.shardasoftwares.in" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="capastr" />
@@ -46,29 +46,18 @@
 			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
-		<h4 style="margin-left: 10%;">{{ type }} registration form</h4>
-			
-		    <form action="" method="post">
-		        {% csrf_token %}
-		        <table style="text-align:center;width:35%;position:absolute;left:32.5%;">
-		            {% load widget_tweaks %}
-		            {% if form.errors %}
-				        <p style="color: red;">
-				            Please correct the error{{ form.errors|pluralize }} below.
-				        </p>
-			    	{% endif %}
+		
+		<div style="width:90%;margin-left:5%;margin-top:50px;">
+			<h4>Personal Data</h4>
+				<p><strong>Name:</strong> {{ name }}</p>
+				<p><strong>Email:</strong> {{ email }}</p>
+				<p><strong>Network:</strong> {{ network }}</p>
+				<p><strong>Tags:</strong> {{ tags }}</p>
+				<p><strong>Max Notifications:</strong> {{ max_notification }}</p>
+				<p><strong>Today's Notifications Count:</strong> {{ todays_notification_count }}</p>
 
-		            <tr><td>First name</td><td>{% render_field form.first_name %}</td></tr>
-		            <tr><td>Last name</td><td>{% render_field form.last_name %}</td></tr>
-		            <tr><td>Email</td><td>{% render_field form.email %}</td></tr>
-		            <tr><td>Mobile</td><td>{% render_field form.mobile %}</td></tr>
-		            <tr><td>Network</td><td>{% render_field form.network %}</td></tr>
-		            <tr><td>Max Notifications</td><td>{% render_field form.max_notification %}</td></tr>
-		            <tr><td>Tags</td><td>{{ form.tags|set_data:"role:tagsinput" }}</td></tr>
-		        	<tr><td></td><td><input type="submit" class="btn btn-success" value="Sign Up" id="cmdSignUp"></td></tr>
-		        </table>
-		        
-		    </form>
+
+		</div>
 		
 	</body>
 </html>

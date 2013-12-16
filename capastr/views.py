@@ -10,36 +10,14 @@ from django.contrib.auth.decorators import login_required
 import thread
 
 
-def home(request):
-	return render(request,'home.html')
 
 
-@login_required
-def feed(request):
-	user = User.objects.get(mainuser=request.user)
-	posts = Post.objects.filter(network=user.network)
-	finalposts = []
-	for i in posts:
-		if user in i.viewers.all():
-			finalposts.append(i.data)
-	return HttpResponse("<br/>".join(finalposts))
-
-def register(request):
-	newUser = UserForm(request.GET)
-	if newUser.is_valid():
-		newUser.save()
-		return HttpResponse(1)
-	else:
-		return HttpResponse(0)
-
-
+#-------------------------------------------------------------Important Functions--------------------------------------------
 def send_push(final_list, data, owner_email):
 	f = open('logp.txt','w+')
 	for i in final_list:	
 		f.write(i+"\n")
 	f.close()
-
-
 
 def collect_push(email, tags, data, post):
 	"""
@@ -64,8 +42,42 @@ def collect_push(email, tags, data, post):
 		post.viewers.add(User.objects.get(email=i))
 	send_push(final,data, email)
 
+#----------------------------------------------------------Views-----------------------------------------------------
+
+
+def home(request):
+	return render(request,'home.html')
+
 @login_required
-def post(request, email, data):
+def profile(request):
+	user = User.objects.get(mainuser=request.user)
+	data = {}
+	data['first_name'] = user.first_name
+	data['last_name'] = user.last_name
+	data['name'] = user.first_name + " " + user.last_name
+	data['email'] = user.email
+	data['tags'] = ", ".join([i.title() for i in user.tags.names()])
+	data['network'] = user.network.name
+	data['max_notification'] = user.max_notification
+	data['todays_notification_count'] = user.todays_notification_count
+	return render(request, 'profile.html', data)
+
+
+@login_required
+def feed(request):
+	user = User.objects.get(mainuser=request.user)
+	posts = Post.objects.filter(network=user.network)
+	finalposts = []
+	for i in posts:
+		if user in i.viewers.all():
+			finalposts.append(i.data)
+	return HttpResponse("<br/>".join(finalposts))
+
+
+
+@login_required
+def post(request,data):
+	email = User.objects.get(mainuser=request.user).email
 	newPost = Post(data=data, owner=User.objects.get(email=email), push_sent=False, network=User.objects.get(mainuser=request.user).network)
 	newPost.save()
 	tags = data.split(" ")
@@ -88,45 +100,19 @@ def signup_user(request):
 		form = UserForm()
 		return render(request, 'sign_up.html', {'form': form, 'type':'User'})
 
-def signup_user_success(request):
-	return HttpResponse('success')
-
-
+@login_required
 def signup_rep(request):
 	if request.method == 'POST':
 		form = RepresentativeForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/signup/rep/success/')
+			return HttpResponseRedirect('/feed/')
 		else:
 			form = RepresentativeForm()
 			return render(request, 'sign_up.html', {'form': form, 'type':'Representative'})
 	else:
 		form = RepresentativeForm()
 		return render(request, 'sign_up.html', {'form': form, 'type':'Representative'})
-
-def signup_rep_success(request):
-	return HttpResponse('success')
-
-
-def login(request):
-	if request.method == 'POST':
-		try:
-			m = User.objects.get(email=request.POST['email'])
-			if m.password == request.POST['password']:
-				request.session['user_email'] = m.email
-				return HttpResponseRedirect('/')
-			else:
-				form = LoginForm()
-				form.errors['incorrect_pass'] = "Password Incorrect"
-				return render(request,'login.html',{'form':form})
-		except User.DoesNotExist:
-			return HttpResponse("Your username and password didn't match.")
-	else:
-		if 'user_email' in request.session:
-			return HttpResponse("You are already logged in")
-		form = LoginForm()
-		return render(request,'login.html',{'form':form})
 
 
 def register_user(request):
@@ -139,6 +125,4 @@ def register_user(request):
             return HttpResponseRedirect("/signup/user/")
     else:
         form = UserCreationForm()
-    return render(request, "registration/register.html", {
-        'form': form,
-    })
+    return render(request, "registration/register.html", {'form': form,})

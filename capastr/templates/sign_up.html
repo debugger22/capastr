@@ -1,0 +1,72 @@
+{% load static %}
+
+<!doctype html>
+<html>
+	<head>
+		<title>Capastr | Sign Up</title>
+		<meta property="og:url" content="http://capastr.shardasoftwares.in" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="capastr" />
+		<meta property="og:image" content="http://www.shardasoftwares.in/images/og.png" />
+		<meta property="og:description" content="Capture The Trends" />	
+		<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.0.3/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/animate.min.css' %}" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/bootstrap-tagsinput.css' %}" />		
+		<link type="text/css" rel="stylesheet" href="{% static 'home/home.css' %}" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400' rel='stylesheet' type='text/css' />
+		<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Balthazar' rel='stylesheet' type='text/css'>
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			$( document ).ready(function (){
+
+			});
+		</script>
+		<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
+		<style>
+			td{
+				text-align: left;
+			}
+			.bootstrap-tagsinput{
+				width:400px;
+			}
+		</style>
+			
+		
+
+	</head>
+	<body style="background:white;">
+		<header id="header" style="z-index:1;">
+			<br/>
+			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
+		</header>		
+		<br/>
+		<h4 style="margin-left: 10%;">{{ type }} registration form</h4>
+			{% if form.errors %}
+		        <p style="color: red;">
+		            Please correct the error{{ form.errors|pluralize }} below.
+		        </p>
+	    	{% endif %}
+
+		    <form action="" method="post">
+		        {% csrf_token %}
+		        <table style="text-align:center;width:35%;position:absolute;left:32.5%;">
+		            {% load widget_tweaks %}
+		            <tr><td>First name</td><td>{% render_field form.first_name %}</td></tr>
+		            <tr><td>Last name</td><td>{% render_field form.last_name %}</td></tr>
+		            <tr><td>Email</td><td>{% render_field form.email %}</td></tr>
+		            <tr><td>Mobile</td><td>{% render_field form.mobile %}</td></tr>
+		            <tr><td>Network</td><td>{% render_field form.network %}</td></tr>
+		            <tr><td>Max Notifications</td><td>{% render_field form.max_notification %}</td></tr>
+		            <tr><td>Tags</td><td>{{ form.tags|set_data:"role:tagsinput" }}</td></tr>
+		        	<tr><td></td><td><input type="submit" class="btn btn-success" value="Sign Up" id="cmdSignUp"></td></tr>
+		        </table>
+		        
+		    </form>
+		
+	</body>
+</html>

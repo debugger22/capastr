@@ -1,0 +1,58 @@
+{% load static %}
+
+<!doctype html>
+<html>
+	<head>
+		<title>Capastr</title>
+		<meta property="og:url" content="http://capastr.shardasoftwares.in" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="capastr" />
+		<meta property="og:image" content="http://www.shardasoftwares.in/images/og.png" />
+		<meta property="og:description" content="Capture The Trends" />	
+		<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.0.3/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/onepage-scroll.css' %}" />
+		<link type="text/css" rel="stylesheet" href="{% static 'home/animate.min.css' %}" />		
+		<link type="text/css" rel="stylesheet" href="{% static 'home/home.css' %}" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400' rel='stylesheet' type='text/css' />
+		<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Balthazar' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="{% static 'home/jquery.onepage-scroll.min.js' %}"></script>
+		<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'home/headroom.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'home/home.js' %}"></script>
+	</head>
+	<body style="background:white;">
+	  			<header id="header" style="position:fixed;z-index:1;">
+					<br/>
+					<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
+				</header>		
+		<div class="head">
+			<section>
+
+	  			<p class="bold-line1">Capture the trends within your network</p>
+				<p class="thin-line1">News, Gossips everything happening around you.</p>
+				<img id="trend_image" style="float:right;margin-right:10%;opacity:0;" src="{{ MEDIA_URL }}/site_images/trend.jpg" />
+			</section>
+			<section style="">
+	  			<p class="bold-line2">Broadcast messages over the network</p>
+				<p style="text-align:center;color:rgb(10,10,10);font-family:Roboto Slab;font-size:20px;margin-top:100px;"></p>
+				<img id="broadcast_image" style="float:left;margin-left:10%;opacity:0;" src="{{ MEDIA_URL }}/site_images/broadcast.jpg" />
+			</section>
+			<section style="">
+	  			<p class="bold-line3">Get notified about the things you care</p>
+				<p style="text-align:center;color:rgb(10,10,10);font-family:Roboto Slab;font-size:20px;margin-top:100px;"></p>
+				<img id="notification_image" style="float:right;margin-right:10%;opacity:0;" src="{{ MEDIA_URL }}/site_images/notification.png" />
+			</section>
+			<section style="">
+	  			<footer>
+					<p style="position:absolute;bottom:60px;text-align:center;width:100%;font-family:Open Sans;color:rgb(200,200,200);">For support, contact us at support@shardasoftwares.in</p>
+					<p style="position:absolute;bottom:60px;text-align:left;width:100%;font-family:Open Sans;color:rgb(200,200,200);">&nbsp;&nbsp;&nbsp;&nbsp;Copyright &copy; 2013 Sharda Softwares</p>
+				</footer>
+			</section>
+		</div>
+				
+	</body>
+</html>

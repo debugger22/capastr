@@ -24,6 +24,7 @@
 
 				$('#id_network').on('change', function() {
   			        $('.spinner').css({'display':'block'});
+  			        $('#trending_tags').animate({'opacity':'0'});
   			        $.ajax({
 						url: "/trending/tags/"+this.value,
 						type: "GET",

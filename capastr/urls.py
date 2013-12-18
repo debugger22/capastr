@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^signup/rep/$', 'capastr.views.signup_rep', name='signup_rep'),
     url(r'^accounts/login/$', login),
     url(r'^accounts/profile/$', 'capastr.views.profile', name='profile'),
-    url(r'^accounts/logout/$', logout),
+    url(r'^accounts/logout/$', logout,{'next_page': '/'}),
     url(r'^register/user/$', 'capastr.views.register_user', name='register_user'),
 
     url(r'^admin/', include(admin.site.urls)),

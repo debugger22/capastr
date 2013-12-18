@@ -43,7 +43,7 @@
 				background-color: rgb(240,240,240);
 				height:30px;
 				padding-top: 6px;
-				padding-left: 5%;
+				padding-left: 20px;
 				margin-bottom: 2px;
 			}
 		</style>
@@ -67,9 +67,15 @@
 		<div style="width:100%;padding-left:10%;margin-top:50px;">
 			
 			<ul>
-				{% for post in posts reversed %}
-				<li>{{ post}}</li>
-				{% endfor %}
+				{% if nofeeds %}
+					<li>Start exploring capastr. - Capastr Team</li>
+					<li>Welcome to Capastr. This is an example post in your feed. - Capastr Team</li>					
+				{% else %}
+					{% for post in posts reversed %}
+					<li>{{ post}}</li>
+					{% endfor %}
+				{% endif %}
+					
 			</ul>
 
 		</div>

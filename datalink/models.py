@@ -15,6 +15,7 @@ class User(models.Model):
     max_notification = models.PositiveSmallIntegerField(verbose_name="Max Notifications",\
     	error_messages = {'null':'Please enter a value','blank':'Please enter a value','invalid':'Please enter a numeric value'},\
     	help_text="Max no. of notifications on your phone.")
+    receive_broadcast = models.BooleanField(verbose_name="Receive Broadcast Msgs", default=True)
     todays_notification_count = models.PositiveSmallIntegerField(verbose_name="Today's Notifications count", blank=True, null=True)
     mainuser = models.ForeignKey(MainUser, related_name='+', blank=True, null=True ,verbose_name="Django's User Model Object")
     time = models.DateField(auto_now_add=True)

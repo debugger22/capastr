@@ -6,9 +6,10 @@ from taggit.managers import TaggableManager
 from datalink.models import User, UserForm, LoginForm
 from representative.models import Representative, RepresentativeForm
 from post.models import Post
+from network.models import Network
 from django.contrib.auth.decorators import login_required
 import thread
-
+import json
 
 
 
@@ -80,7 +81,11 @@ def feed(request):
 	for i in posts:
 		if user in i.viewers.all():
 			finalposts.append(i.data + "  -  "+ i.owner.first_name + " " + i.owner.last_name)
-	return render(request,'feed.html',{'posts':finalposts})
+	if len(finalposts)==0:
+		nofeeds = True
+	else:
+		nofeeds = False
+	return render(request,'feed.html',{'posts':finalposts,'nofeeds':nofeeds})
 
 
 
@@ -139,3 +144,21 @@ def register_user(request):
     else:
         form = UserCreationForm()
     return render(request, "registration/register.html", {'form': form,})
+
+def trending_tags(request, id):
+	from collections import Counter
+	network = Network.objects.get(id=id)
+	users = User.objects.filter(network=network)
+	tags = []
+	slugs = []
+	for i in users:
+		tags += i.tags.names()
+		slugs += i.tags.slugs()
+	temp_tags = Counter(tags).most_common()
+	temp_slugs = Counter(slugs).most_common()
+	tags = []
+	slugs = []
+	for i in xrange(len(temp_tags)):
+		tags.append(temp_tags[i][0])
+		slugs.append(temp_slugs[i][0])
+	return HttpResponse(json.dumps({'tags':tags[:20],'slugs':slugs[:20]}))

@@ -22,6 +22,31 @@
 		<script type="text/javascript">
 			$( document ).ready(function (){
 
+				$('#id_network').on('change', function() {
+  			        $.ajax({
+						url: "/trending/tags/"+this.value,
+						type: "GET",
+						dataType: "json",
+						success: function (rawdata, status, crap) {
+								if(rawdata.tags.length!=0){
+									$('#trending_tags').animate({'opacity':'1'});
+									$('#trending_tags').html("<p>Most famous tags in this network</p>");
+									for(var i=0; i<rawdata.tags.length; i++){
+
+										document.getElementById('trending_tags').innerHTML += "<div class='tag-element' id='"+rawdata.slugs[i]+"' data-tag='"+rawdata.tags[i]+"'>"+rawdata.tags[i]+"</div>";
+									}
+								
+									$('.tag-element').click(function (event){
+										$('#id_tags').tagsinput('add',$('#'+event.target.id).data('tag'));
+										$('#'+event.target.id).fadeOut('slow');
+									});
+								}else{
+									$('#trending_tags').animate({'opacity':'0'});
+								}
+							}
+
+						});
+				});
 			});
 		</script>
 		<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -34,6 +59,29 @@
 			.bootstrap-tagsinput{
 				width:400px;
 				height:100px;
+			}
+			#trending_tags{
+				width:20%;
+				position: absolute;
+				right:10%;
+				top:100px;
+				height:500px;
+				opacity:0;
+				word-wrap: break-word;
+
+			}
+			
+			.tag-element{
+				margin-right: 5px;
+				display: inline-block;
+				padding:8px;
+				margin-bottom: 5px;
+				background-color: rgb(240,240,240);
+				cursor:pointer;
+				border-radius: 5px;
+			}
+			.tag-element:hover{
+				background-color: rgb(200,250,250);
 			}
 		</style>
 			
@@ -64,11 +112,14 @@
 		            <tr><td>Mobile</td><td>{% render_field form.mobile %}</td></tr>
 		            <tr><td>Network</td><td>{% render_field form.network %}</td></tr>
 		            <tr><td>Max Notifications</td><td>{% render_field form.max_notification %}</td></tr>
+		            <tr><td>Receive Broadcast</td><td>{% render_field form.receive_broadcast %}</td></tr>
 		            <tr><td>Tags</td><td>{{ form.tags|set_data:"role:tagsinput" }}</td></tr>
 		        	<tr><td></td><td><input type="submit" class="btn btn-success" value="Sign Up" id="cmdSignUp"></td></tr>
 		        </table>
 		        
 		    </form>
-		
+			<div id="trending_tags">
+				
+			</div>
 	</body>
 </html>

@@ -37,7 +37,7 @@
 			background-color: rgb(240,240,240);
 			height:30px;
 			padding-top: 6px;
-			padding-left: 5%;
+			padding-left: 20px;
 		}
 		#updatable_list li{
 			cursor: pointer;
@@ -45,6 +45,12 @@
 		.bootstrap-tagsinput{
 			width:60%;
 			height: 100px;
+		}
+		form{
+			padding-top: 10px;
+		}
+		input[type=text]{
+			margin-left: 5px;
 		}
 		</style>
 		<script type="text/javascript" src="{% static 'profile/profile.js' %}"></script>
@@ -69,7 +75,7 @@
 							<form action="/update/name/" method="post">
 							{% csrf_token %}
 							<label>New Name: </label><input type="text" name="new_name" />
-							<input type="submit" value="Update" class="btn btn-info" />
+							<input type="submit" id="cmdName" value="Update" class="btn btn-info" />
 							</form>
 						</span>
 					</li>
@@ -80,27 +86,27 @@
 							<form action="/update/email/" method="post">
 							{% csrf_token %}
 							<label>New Email: </label><input type="text" name="new_email" />
-							<input type="submit" value="Update" class="btn btn-info" />
+							<input type="submit" id="cmdEmail" value="Update" class="btn btn-info" />
 							</form>
 						</span>
 					</li>
 					<li id="mobile"><strong>Mobile:</strong> {{ mobile }}
-						<div id="mobile_close" data-for="mobile" class="pull-right close-btn" style="margin-right:5px;font-size:15px;display: none;">&times;</div>
+						<div id="mobile_close" data-for="mobile" class="pull-right close-btn" style="margin-right:5px;font-size:18px;display: none;">&times;</div>
 						<span id="mobile_form" style="display:none;">
 							<form action="/update/mobile/" method="post">
 							{% csrf_token %}
 							<label>New Mobile: </label><input type="text" name="new_mobile" />
-							<input type="submit" value="Update" class="btn btn-info" />
+							<input type="submit" id="cmdMobile" value="Update" class="btn btn-info" />
 							</form>
 						</span>
 					</li>
-					<li id="tags"><strong>Tags:</strong> {{ tags }}
-						<div id="tags_close" data-for="tags" class="pull-right close-btn" style="margin-right:5px;font-size:15px;display: none;">&times;</div>
+					<li id="tags" style="height:60px;overflow-y: scroll;"><strong>Tags:</strong> {{ raw_tags }}
+						<div id="tags_close" data-for="tags" class="pull-right close-btn" style="margin-right:5px;font-size:18px;display: none;">&times;</div>
 						<span id="tags_form" style="display:none;">
-							<form action="/update/tags/" method="post">
+							<form id="tags_form_form" action="/update/tags/" method="post">
 							{% csrf_token %}
 							<label>New Tags: </label><input data-role="tagsinput" value="{{ raw_tags }}" type="text" name="new_tags" />
-							<input type="submit" value="Update" class="btn btn-info" />
+							<input type="submit" id="cmdTags" value="Update" class="btn btn-info" />
 							</form>
 						</span>
 					</li>

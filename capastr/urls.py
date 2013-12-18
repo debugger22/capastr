@@ -9,7 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'capastr.views.home', name='home'),
     url(r'^feed/$', 'capastr.views.feed', name='feed'),
-
+    url(r'^trending/tags/(\d+)$', 'capastr.views.trending_tags', name='trending_tags'),
     url(r'^post/(.*)/$', 'capastr.views.post', name='post'),
     url(r'^signup/user/$', 'capastr.views.signup_user', name='signup_user'),
     url(r'^signup/rep/$', 'capastr.views.signup_rep', name='signup_rep'),

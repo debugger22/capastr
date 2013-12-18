@@ -60,11 +60,11 @@
 			.spinner {
 				width: 30px;
 				height: 30px;
-				background-color: rgb(255,150,0);
-				position: absolute;
-				right:14%;
-				top:250px;
+				background-color: rgb(255,255,255);
 				display: none;
+				//position: fixed;
+				left:7%;
+				top:18px;
 				-webkit-animation: rotateplane 1.2s infinite ease-in-out;
 				animation: rotateplane 1.2s infinite ease-in-out;
 			}
@@ -117,8 +117,7 @@
 	</head>
 	<body style="background:white;">
 		<header id="header" style="z-index:1;">
-			<br/>
-			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
+			<div class="spinner"></div><div style="padding-top:10px;font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
 		<h4 style="margin-left: 10%;">{{ type }} registration form</h4>
@@ -148,6 +147,5 @@
 			<div id="trending_tags">
 				
 			</div>
-			<div class="spinner"></div>
 	</body>
 </html>

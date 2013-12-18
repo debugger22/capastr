@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
+from django.views.decorators.cache import cache_page
 from taggit.managers import TaggableManager
 from datalink.models import User, UserForm, LoginForm
 from representative.models import Representative, RepresentativeForm
@@ -10,6 +11,7 @@ from network.models import Network
 from django.contrib.auth.decorators import login_required
 import thread
 import json
+
 
 
 
@@ -45,10 +47,11 @@ def collect_push(email, tags, data, post):
 
 #----------------------------------------------------------Views-----------------------------------------------------
 
-
+@cache_page
 def home(request):
 	return render(request,'home.html')
 
+@cache_page
 @login_required
 def profile(request):
 	user = User.objects.get(mainuser=request.user)
@@ -72,7 +75,7 @@ def profile(request):
 	data['total_posts'] = count
 	return render(request, 'profile.html', data)
 
-
+@cache_page
 @login_required
 def feed(request):
 	user = User.objects.get(mainuser=request.user)

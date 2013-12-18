@@ -52,7 +52,6 @@ def collect_push(email, tags, data, post):
 def home(request):
 	return render(request,'home.html')
 
-@cache_page(60*15)
 @login_required
 def profile(request):
 	user = User.objects.get(mainuser=request.user)
@@ -67,10 +66,10 @@ def profile(request):
 	data['network'] = user.network.name
 	data['max_notification'] = user.max_notification
 	data['todays_notification_count'] = user.todays_notification_count
-	posts = cache.get('posts')
+	posts = cache.get('posts'+user.network.name)
 	if posts==None:
 		posts = Post.objects.filter(network=user.network)
-		cache.set('posts',posts)
+		cache.set('posts'+user.network.name,posts)
 	finalposts = []
 	count = 0
 	for i in posts:
@@ -157,10 +156,10 @@ def register_user(request):
 def trending_tags(request, id):
 	from collections import Counter
 	network = Network.objects.get(id=id)
-	users = cache.get('users')
+	users = cache.get('users'+network.name)
 	if users==None:
 		users = User.objects.filter(network=network)
-		cache.set('users',users)
+		cache.set('users'+network.name,users)
 	tags = []
 	slugs = []
 	for i in users:

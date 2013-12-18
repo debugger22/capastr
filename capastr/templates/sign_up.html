@@ -23,12 +23,14 @@
 			$( document ).ready(function (){
 
 				$('#id_network').on('change', function() {
+  			        $('.spinner').css({'display':'block'});
   			        $.ajax({
 						url: "/trending/tags/"+this.value,
 						type: "GET",
 						dataType: "json",
 						success: function (rawdata, status, crap) {
 								if(rawdata.tags.length!=0){
+									$('.spinner').css({'display':'none'});
 									$('#trending_tags').animate({'opacity':'1'});
 									$('#trending_tags').html("<p>Most famous tags in this network</p>");
 									for(var i=0; i<rawdata.tags.length; i++){
@@ -42,6 +44,7 @@
 									});
 								}else{
 									$('#trending_tags').animate({'opacity':'0'});
+									$('.spinner').css({'display':'none'});
 								}
 							}
 
@@ -54,13 +57,15 @@
 		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
 		<style>
 			.spinner {
-			  width: 30px;
-			  height: 30px;
-			  background-color: #333;
-
-			  margin: 100px auto;
-			  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
-			  animation: rotateplane 1.2s infinite ease-in-out;
+				width: 30px;
+				height: 30px;
+				background-color: rgb(255,150,0);
+				position: absolute;
+				right:14%;
+				top:250px;
+				display: none;
+				-webkit-animation: rotateplane 1.2s infinite ease-in-out;
+				animation: rotateplane 1.2s infinite ease-in-out;
 			}
 
 			@-webkit-keyframes rotateplane {

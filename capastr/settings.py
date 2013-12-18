@@ -47,14 +47,14 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
+    #'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'capastr.urls'
@@ -112,3 +112,4 @@ MEDIA_URL = '/media/'
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=60'
 CACHE_MIDDLEWARE_SECONDS = 60*15
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
+

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 from taggit.managers import TaggableManager
 from datalink.models import User, UserForm, LoginForm
 from representative.models import Representative, RepresentativeForm
@@ -47,11 +48,11 @@ def collect_push(email, tags, data, post):
 
 #----------------------------------------------------------Views-----------------------------------------------------
 
-@cache_page
+@cache_page(60*15)
 def home(request):
 	return render(request,'home.html')
 
-@cache_page
+@cache_page(60*15)
 @login_required
 def profile(request):
 	user = User.objects.get(mainuser=request.user)
@@ -66,7 +67,10 @@ def profile(request):
 	data['network'] = user.network.name
 	data['max_notification'] = user.max_notification
 	data['todays_notification_count'] = user.todays_notification_count
-	posts = Post.objects.filter(network=user.network)
+	posts = cache.get('posts')
+	if posts==None:
+		posts = Post.objects.filter(network=user.network)
+		cache.set('posts',posts)
 	finalposts = []
 	count = 0
 	for i in posts:
@@ -75,11 +79,13 @@ def profile(request):
 	data['total_posts'] = count
 	return render(request, 'profile.html', data)
 
-@cache_page
 @login_required
 def feed(request):
 	user = User.objects.get(mainuser=request.user)
-	posts = Post.objects.filter(network=user.network)
+	posts = cache.get('posts')
+	if posts==None:
+		posts = Post.objects.filter(network=user.network)
+		cache.set('posts',posts)
 	finalposts = []
 	for i in posts:
 		if user in i.viewers.all():
@@ -151,7 +157,10 @@ def register_user(request):
 def trending_tags(request, id):
 	from collections import Counter
 	network = Network.objects.get(id=id)
-	users = User.objects.filter(network=network)
+	users = cache.get('users')
+	if users==None:
+		users = User.objects.filter(network=network)
+		cache.set('users',users)
 	tags = []
 	slugs = []
 	for i in users:

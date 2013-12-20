@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
@@ -63,7 +63,7 @@ def profile(request):
 	data['mobile'] = user.mobile
 	data['raw_tags'] = ", ".join(user.tags.names())
 	data['tags'] = ", ".join([i.title() for i in user.tags.names()])
-	data['network'] = user.network.name
+	data['network'] = user.network
 	data['max_notification'] = user.max_notification
 	data['todays_notification_count'] = user.todays_notification_count
 	posts = cache.get('posts'+user.network.name)
@@ -153,23 +153,33 @@ def register_user(request):
         form = UserCreationForm()
     return render(request, "registration/register.html", {'form': form,})
 
+@login_required
 def trending_tags(request, id):
 	from collections import Counter
 	network = Network.objects.get(id=id)
-	users = cache.get('users'+network.name)
-	if users==None:
-		users = User.objects.filter(network=network)
-		cache.set('users'+network.name,users)
-	tags = []
-	slugs = []
-	for i in users:
-		tags += i.tags.names()
-		slugs += i.tags.slugs()
-	temp_tags = Counter(tags).most_common()
-	temp_slugs = Counter(slugs).most_common()
-	tags = []
-	slugs = []
-	for i in xrange(len(temp_tags)):
-		tags.append(temp_tags[i][0])
-		slugs.append(temp_slugs[i][0])
+	tags = cache.get('famous_tags_'+network.name)
+	slugs = cache.get('famous_slugs_'+network.name)
+	if tags==None or slugs==None:
+		users = cache.get('users_'+network.name)
+		if users==None:
+			users = User.objects.filter(network=network)
+			cache.set('users_'+network.name,users,60*60*12)
+		tags = []
+		slugs = []
+		for i in users:
+			tags += i.tags.names()
+			slugs += i.tags.slugs()
+		temp_tags = Counter(tags).most_common()
+		temp_slugs = Counter(slugs).most_common()
+		tags = []
+		slugs = []
+		for i in xrange(len(temp_tags)):
+			tags.append(temp_tags[i][0])
+			slugs.append(temp_slugs[i][0])
+		cache.set('famous_tags_'+network.name,tags,60*60*6)
+		cache.set('famous_slugs_'+network.name,slugs,60*60*6)		
 	return HttpResponse(json.dumps({'tags':tags[:20],'slugs':slugs[:20]}))
+
+def pagenotfound(request):
+	url = request.build_absolute_uri(request.get_full_path())
+	return render(request, '404.html',{'url':url})

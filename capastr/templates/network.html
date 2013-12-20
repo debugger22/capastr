@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Capastr | Feed</title>
+		<title>Capastr | Network</title>
 		<meta property="og:url" content="http://capastr.shardasoftwares.in" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="capastr" />
@@ -28,13 +28,6 @@
 		<script type="text/javascript" src="{% static 'home/jquery.inview.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'home/bootstrap-tagsinput.min.js' %}"></script>
 		<style>
-			td{
-				text-align: left;
-			}
-			.bootstrap-tagsinput{
-				width:400px;
-				height:100px;
-			}
 			ul{
 				list-style-type: none;
 			}
@@ -46,39 +39,56 @@
 				padding-left: 20px;
 				margin-bottom: 2px;
 			}
+			#tags_container{
+				width:70%;
+				word-wrap: break-word;
+
+			}
+			
+			.tag-element{
+				margin-right: 5px;
+				display: inline-block;
+				padding:8px;
+				margin-bottom: 5px;
+				background-color: rgb(240,240,240);
+				cursor:pointer;
+				border-radius: 5px;
+			}
+			.tag-element:hover{
+				background-color: rgb(200,250,250);
+			}
 		</style>
 			
 		
 
 	</head>
-	<body style="background:white;font-size:12px;">
+	<body style="background:white;">
 		<header id="header" style="z-index:1;">
 			<br/>
 			<div style="font-family:Josefin Sans;font-weight:bold;font-size:30px;margin-left:10%;">capastr</div>
 		</header>		
 		<br/>
-		<div style="margin-right:10%;width:15%;" class="pull-right btn-group">
-			<a class="btn btn-success" href="/accounts/profile/">Profile</a>
-			<a class="btn btn-danger" href="/accounts/logout/">Logout</a>
-		</div>
-
-		
-		<h4 style="color:rgb(9,46,32);margin-left:10%;">Feed</h4>
+		<h4 style="color:rgb(9,46,32);margin-left:10%;">Network</h4>
 		<div style="width:100%;padding-left:10%;margin-top:50px;">
-			
+			<p>About the network</p>
 			<ul>
-				{% if nofeeds %}
-					<li>Start exploring capastr. - Capastr Team</li>
-					<li>Welcome to Capastr. This is an example post in your feed. - Capastr Team</li>					
-				{% else %}
-					{% for post in posts reversed %}
-					<li>{{ post }}</li>
-					{% endfor %}
-				{% endif %}
-					
+				<li>Name: {{ network.name }}</li>
+				<li>Address: {{ address }}</li>
 			</ul>
-
+			<br/><br/>
+			<p>Users in the network</p>
+			<ul>
+				{% for user in users %}
+					<a href="/n/{{ network.id }}/u/{{ user.id }}/"><li>{{ user.first_name }} {{ user.last_name }}</li></a>
+				{% endfor %}
+			</ul>
+			<br/><br/>
+			<p>Famous tags in this network</p>
+			<div id="tags_container">
+				{% for tag in tags %}
+					<a href="/n/{{ network.id }}/t/{{ tag }}/"><div class="tag-element" data-slug="to-be-added" >{{ tag }}</div></a>
+				{% endfor %}
+			</div>
 		</div>
-		
 	</body>
 </html>

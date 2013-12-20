@@ -113,10 +113,10 @@
 
 				</ul>
 				<ul id="non_updatable_list">
-					<li id="network"><strong>Network:</strong> {{ network }}</li>
-					<li id="total_posts"><strong>Total Posts:</strong> {{ total_posts }}</li>				
-					<li id="max_notifications"><strong>Max Notifications:</strong> {{ max_notification }}</li>
-					<li id="todays_notification_count"><strong>Today's Notifications Count:</strong> {{ todays_notification_count }}</li>
+					<li id="network"><strong>Network:&nbsp;</strong><a href="/network/{{ network.id }}/">{{ network.name }}</a></li>
+					<li id="total_posts"><strong>Total Posts:&nbsp;</strong> {{ total_posts }}</li>				
+					<li id="max_notifications"><strong>Max Notifications:&nbsp;</strong> {{ max_notification }}</li>
+					<li id="todays_notification_count"><strong>Today's Notifications Count:&nbsp;</strong> {{ todays_notification_count }}</li>
 				</ul>
 
 		</div>

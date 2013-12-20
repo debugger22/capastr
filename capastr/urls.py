@@ -6,6 +6,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
 
+
+
+#handler404 = 'capastr.views.pagenotfound'
 urlpatterns = patterns('',
     url(r'^$', 'capastr.views.home', name='home'),
     url(r'^feed/$', 'capastr.views.feed', name='feed'),
@@ -26,4 +29,9 @@ urlpatterns += staticfiles_urlpatterns()
 if 'update_data' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         url(r'^update/', include('update_data.urls')),
+    )
+
+if 'network' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        url(r'^network/', include('network.urls')),
     )

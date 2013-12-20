@@ -42,4 +42,4 @@ def view_network(request,id):
 	if users==None:
 		users = User.objects.filter(network=network)
 		cache.set('users_'+network.name,users,60*60*12)
-	return render(request,'network.html',{'users':users,'tags':tags, 'slugs':slugs,'network':network,'address':address})
+	return render(request,'network.html',{'users':users,'tags':tags[:100], 'slugs':slugs[:100],'network':network,'address':address})
